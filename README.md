@@ -23,3 +23,5 @@ RemoveActor() 메소드는 vector에 존재하는 actor들을 모두 지운 후 
 6. view 이름을 buffer로 변경
 
 7. update() 부분을 싱글톤의 actormanager를 불러들임으로 의존성 약화시킴
+
+8. 종료조건 추가 : !(GetAsyncKeyState(VK_ESCAPE) & 0x8000)
