@@ -11,9 +11,11 @@ public:
 	ActorInfo();
 	~ActorInfo();
 
-	Point pt;
-	int type;
-	int life;
+	Point _pt;
+	int _type;
+	int _life;
+
+	void initialize(int x, int y, int type, int life);
 
 };
 

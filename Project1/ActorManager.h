@@ -9,11 +9,18 @@
 class ActorManager
 {
 public:
-	ActorManager();
+	
 	~ActorManager();
 
 	std::vector<Actor*> actors;
 
 	void initialize();
+	void AddActor(Actor* pActor);
+	void RemoveActor();
+
+	static ActorManager* GetInstance();
+
+private:
+	ActorManager();
 };
 
