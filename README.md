@@ -1,6 +1,14 @@
 # 3dmp
 3dmp 첫번째 기본 게임 개발
 
+20170129 변경 및 추가사항
+
+1. Po (히어로의 대포) 그리기
+ - 직선의 방정식으로 나타내기
+ - 좌표 변환 (수학적 좌표에서 Visual Studio의 콘솔 좌표로)
+
+------------------
+
 20170122 변경사항
 
 1. ActorInfo::initialize() 메소드 추가
@@ -28,4 +36,4 @@
 
 ---
 
-TODO move here's angle
+TODO move hero's angle
