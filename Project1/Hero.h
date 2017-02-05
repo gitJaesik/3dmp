@@ -7,5 +7,7 @@ public:
 	Hero();
 	~Hero();
 
+public :
+	Point _d;
 };
 

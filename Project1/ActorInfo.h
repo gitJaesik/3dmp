@@ -8,6 +8,7 @@ struct Point {
 class ActorInfo
 {
 public:
+	ActorInfo(int x, int y, int type, int life);
 	ActorInfo();
 	~ActorInfo();
 
