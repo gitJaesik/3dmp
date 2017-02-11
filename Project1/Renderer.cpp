@@ -78,6 +78,7 @@ void Renderer::update()
 		buffer[po] = 'x';		//화면 좌표 기준
 	}
 
+	
 }
 
 void Renderer::reder()
