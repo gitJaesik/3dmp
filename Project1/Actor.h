@@ -7,5 +7,8 @@ public:
 	Actor();
 	~Actor();
 	ActorInfo actorInfo;
+
+	void update();
+
 };
 

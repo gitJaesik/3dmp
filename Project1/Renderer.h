@@ -9,6 +9,7 @@ public:
 	~Renderer();
 
 	void initialize();
+	void windowClear();
 	void gotoxy(int x, int y);
 
 	void update();

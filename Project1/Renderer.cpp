@@ -39,13 +39,25 @@ void Renderer::gotoxy(int x, int y)
 
 void Renderer::update()
 {
-
 	for (unsigned int i = 0; i < ActorManager::GetInstance()->actors.size(); ++i) {
 		Actor* actor = ActorManager::GetInstance()->actors[i];
 		if (actor->actorInfo._life > 0) {
 			buffer[actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40] = objectShape[actor->actorInfo._type];
 		}
 	}
+
+	float rr=0.0f;
+	for (int i = 0; i < 10; ++i)
+		rr += 0.1f;
+
+
+	static float theta = 90.0f * (3.141592f / 180.0f) ;			// degree to radian,  radian to degree
+	if (GetAsyncKeyState(VK_LEFT) & 0x8001)
+		theta += 0.03f;
+
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8001)
+		theta -= 0.03f;
+
 
 	Point H;
 	Point D;
@@ -54,10 +66,10 @@ void Renderer::update()
 	H.x = 0;
 	H.y = 0;
 
-	D.x = -8;
-	D.y = 5;
-
-
+	//D.x = -8;
+	//D.y = 5;
+	D.x = cosf(theta) * 5.0f ;
+	D.y = sinf(theta) * 5.0f;
 
 	float Distance=  sqrtf((D.y - H.y) * (D.y - H.y) + (D.x- H.x) * (D.x - H.x));
 	float t=0.0f;
@@ -66,6 +78,7 @@ void Renderer::update()
 	G.x = D.x - H.x;
 	G.y = D.y - H.y;
 
+	//hero ÀÇ Æ÷ 
 	for (int increment_t = 0; increment_t  < (int)Distance; ++increment_t) {
 		t = increment_t / float(Distance);
 		//t = 0.0 ~ 1.0
@@ -94,3 +107,10 @@ void Renderer::reder()
 }
 
 
+void Renderer::windowClear()
+{
+	for (auto& elem : buffer)
+	{
+		elem = ' ';
+	} 
+}

@@ -49,6 +49,10 @@ int main()
 	while ( true ) 
 	{	//update , render
 		//hero->actorInfo._pt.x++;
+
+
+
+		Renderer::GetInstance()->windowClear();
 		Renderer::GetInstance()->update();
 		Renderer::GetInstance()->reder();
 
