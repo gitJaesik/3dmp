@@ -38,3 +38,24 @@ void ActorManager::RemoveActor()
 	actors.clear();
 }
 
+
+void ActorManager::update()
+{
+	// 모든 actor의 값을 업데이트한다.
+	for (auto actor : actors)
+	{
+		actor->update();
+	}
+
+	// 업데이트 된 값을 Renderer에서 사용할 것이다.
+}
+
+void ActorManager::UpdateActor(Actor* pActor)
+{
+	
+}
+
+std::vector<Actor*> ActorManager::GetActors()
+{
+	return actors;
+}

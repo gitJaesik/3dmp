@@ -6,5 +6,7 @@ public:
 	Enemy();
 	~Enemy();
 
+	virtual void update() override;
+
 };
 

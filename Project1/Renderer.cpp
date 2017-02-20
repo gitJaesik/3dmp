@@ -39,47 +39,26 @@ void Renderer::gotoxy(int x, int y)
 
 void Renderer::update()
 {
+	
 	for (unsigned int i = 0; i < ActorManager::GetInstance()->actors.size(); ++i) {
-		Actor* actor = ActorManager::GetInstance()->actors[i];
-		if (actor->actorInfo._life > 0) {
-			buffer[actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40] = objectShape[actor->actorInfo._type];
-		}
+	Actor* actor = ActorManager::GetInstance()->actors[i];
+	if (actor->actorInfo._life > 0) {
+	buffer[actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40] = objectShape[actor->actorInfo._type];
+	}
 	}
 
-	float rr=0.0f;
-	for (int i = 0; i < 10; ++i)
-		rr += 0.1f;
+	//hero 의 포 
 
 
-	static float theta = 90.0f * (3.141592f / 180.0f) ;			// degree to radian,  radian to degree
-	if (GetAsyncKeyState(VK_LEFT) & 0x8001)
-		theta += 0.03f;
-
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8001)
-		theta -= 0.03f;
-
-
-	Point H;
-	Point D;
-
-	//수학식 좌표 포 위치를 배치
-	H.x = 0;
-	H.y = 0;
-
-	//D.x = -8;
-	//D.y = 5;
-	D.x = cosf(theta) * 5.0f ;
-	D.y = sinf(theta) * 5.0f;
-
-	float Distance=  sqrtf((D.y - H.y) * (D.y - H.y) + (D.x- H.x) * (D.x - H.x));
-	float t=0.0f;
+	float Distance = sqrtf((actorInfo._pt.y - _ParentNode->actorInfo._pt.y) * (actorInfo._pt.y - _ParentNode->actorInfo._pt.y)
+		+ (actorInfo._pt.x - _ParentNode->actorInfo._pt.x) * (actorInfo._pt.x - _ParentNode->actorInfo._pt.x));
+	float t = 0.0f;
 
 	Point G;
-	G.x = D.x - H.x;
-	G.y = D.y - H.y;
+	G.x = actorInfo._pt.x - _ParentNode->actorInfo._pt.x;
+	G.y = actorInfo._pt.y - _ParentNode->actorInfo._pt.y;
 
-	//hero 의 포 
-	for (int increment_t = 0; increment_t  < (int)Distance; ++increment_t) {
+	for (int increment_t = 0; increment_t < (int)Distance; ++increment_t) {
 		t = increment_t / float(Distance);
 		//t = 0.0 ~ 1.0
 		//t 에 따른 직선을 구한다
@@ -87,16 +66,27 @@ void Renderer::update()
 		int pox = G.x*t;
 		int poy = G.y*t;
 
-		int po = 15 + pox + (poy+7) * 40;
-		buffer[po] = 'x';		//화면 좌표 기준
-	}
+		int po = pox + _d.x + (poy + _d.y) * 40;
 
-	
+		// buffer size 초과 하지 않도록 설정
+		//if (po < buffer.size())
+		//	buffer[po] = 'x';		//화면 좌표 기준
+	}
 }
 
 void Renderer::reder()
 {
 	gotoxy(0, 0);
+
+
+	/*for (unsigned int i = 0; i < ActorManager::GetInstance()->actors.size(); ++i) {
+		Actor* actor = ActorManager::GetInstance()->actors[i];
+		if (actor->actorInfo._life > 0) {
+			buffer[actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40] = objectShape[actor->actorInfo._type];
+		}
+	}*/
+
+
 
 	for (size_t  i = 0; i < buffer.size(); ++i) {
 		if (i != 0 && i % 40 == 0) {
@@ -109,6 +99,7 @@ void Renderer::reder()
 
 void Renderer::windowClear()
 {
+	// &연산자를 붙이지 않으면 복사가 되지 않는다.
 	for (auto& elem : buffer)
 	{
 		elem = ' ';

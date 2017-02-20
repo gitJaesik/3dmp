@@ -1,5 +1,6 @@
 #pragma once
 #include "ActorInfo.h"
+#include <vector>
 
 class Actor
 {
@@ -8,7 +9,10 @@ public:
 	~Actor();
 	ActorInfo actorInfo;
 
-	void update();
+	virtual void update();
 
+	std::vector<Actor*> _ChildNode;
+
+	Actor* _ParentNode;
 };
 

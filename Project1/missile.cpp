@@ -10,3 +10,8 @@ missile::missile()
 missile::~missile()
 {
 }
+
+void missile::update()
+{
+
+}

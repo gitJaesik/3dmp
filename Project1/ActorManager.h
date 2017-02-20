@@ -12,15 +12,22 @@ public:
 	
 	~ActorManager();
 
-	std::vector<Actor*> actors;
+	
 
 	void initialize();
 	void AddActor(Actor* pActor);
+	void UpdateActor(Actor* pActor);
 	void RemoveActor();
+
+	std::vector<Actor*> GetActors();
+
+	void update();
 
 	static ActorManager* GetInstance();
 
 private:
 	ActorManager();
+
+	std::vector<Actor*> actors;
 };
 

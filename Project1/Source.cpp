@@ -1,19 +1,27 @@
 #include <iostream>
-using namespace std;
 
 #include "ActorInfo.h"
 #include "Enemy.h"
 #include "Hero.h"
+#include "Po.h"
 #include "Renderer.h"
 #include "ActorManager.h"
 #include <windows.h>
 
+using namespace std;
 
 
 void createObjects() {
 	Hero* hero = new Hero;
-	hero->actorInfo = ActorInfo(14, 15, 1, 1);
+	hero->actorInfo = ActorInfo(13, 11, 1, 1);
 	ActorManager::GetInstance()->AddActor(hero);
+
+
+	// Po의 시작점과 끝점을 입력
+	Po* po = new Po;
+	po->actorInfo = ActorInfo(18, 8, 500, 1);
+	hero->_ChildNode.push_back(po); 
+	po->_ParentNode = hero;
 
 	Enemy* enemy = new Enemy;
 	enemy->actorInfo = ActorInfo(6, 3, 2, 1);
@@ -28,8 +36,12 @@ void createObjects() {
 	ActorManager::GetInstance()->AddActor(enemy3);
 
 	missile* missile1 = new missile;
-	missile1->actorInfo = ActorInfo(18, 10, 0, 1);
+	missile1->actorInfo = ActorInfo(18, 8, 0, 1);
 	ActorManager::GetInstance()->AddActor(missile1);
+
+
+
+
 }
 
 
@@ -49,16 +61,19 @@ int main()
 	while ( true ) 
 	{	//update , render
 		//hero->actorInfo._pt.x++;
-
-
-
 		Renderer::GetInstance()->windowClear();
+
+		// 모든 actor들을 update하도록 변경
+		ActorManager::GetInstance()->update();
+		
 		Renderer::GetInstance()->update();
+
 		Renderer::GetInstance()->reder();
 
 		// break하는 부분
 
-		if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000)) break;
+		if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
+			break;
 	}
 
 	ActorManager::GetInstance()->RemoveActor();
