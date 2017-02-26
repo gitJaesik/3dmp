@@ -16,12 +16,11 @@ void createObjects() {
 	hero->actorInfo = ActorInfo(13, 11, 1, 1);
 	ActorManager::GetInstance()->AddActor(hero);
 
-
 	// Po의 시작점과 끝점을 입력
 	Po* po = new Po;
-	po->actorInfo = ActorInfo(18, 8, 500, 1);
-	hero->_ChildNode.push_back(po); 
-	po->_ParentNode = hero;
+	po->actorInfo = ActorInfo(18, 8, 3, 1);
+	hero->addChildNode(po); 
+	po->setParentNode(hero);
 
 	Enemy* enemy = new Enemy;
 	enemy->actorInfo = ActorInfo(6, 3, 2, 1);
@@ -38,10 +37,6 @@ void createObjects() {
 	missile* missile1 = new missile;
 	missile1->actorInfo = ActorInfo(18, 8, 0, 1);
 	ActorManager::GetInstance()->AddActor(missile1);
-
-
-
-
 }
 
 

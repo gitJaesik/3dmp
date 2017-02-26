@@ -1,12 +1,9 @@
 #include "ActorInfo.h"
 
-
-
 ActorInfo::ActorInfo(int x, int y, int type, int life)
 {
 	initialize(x, y, type, life);
 }
-
 
 ActorInfo::ActorInfo()
 {

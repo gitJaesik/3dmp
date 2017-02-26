@@ -10,8 +10,5 @@ public:
 
 	virtual void update() override;
 
-public :
-	Point _d;
-
 };
 

@@ -6,12 +6,9 @@ ActorManager* ActorManager::GetInstance()
 	return &actorManager;
 }
 
-
-
 ActorManager::ActorManager()
 {
 }
-
 
 ActorManager::~ActorManager()
 {
@@ -20,8 +17,6 @@ ActorManager::~ActorManager()
 void ActorManager::initialize()
 {
 	// buffer size = 640 = 16*40
-
-	
 }
 
 void ActorManager::AddActor(Actor* pActor)
@@ -45,6 +40,11 @@ void ActorManager::update()
 	for (auto actor : actors)
 	{
 		actor->update();
+		if (actor->getChildNodes().size() != 0) {
+			for (auto child_actor : actor->getChildNodes()) {
+				child_actor->update();
+			}
+		}
 	}
 
 	// 업데이트 된 값을 Renderer에서 사용할 것이다.
@@ -55,7 +55,7 @@ void ActorManager::UpdateActor(Actor* pActor)
 	
 }
 
-std::vector<Actor*> ActorManager::GetActors()
+const std::vector<Actor*>& ActorManager::GetActors()
 {
 	return actors;
 }

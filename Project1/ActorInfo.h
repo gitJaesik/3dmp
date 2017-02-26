@@ -5,8 +5,6 @@ struct Point {
 	int y;
 };
 
-
-
 struct ActorInfo
 {
 	ActorInfo(int x, int y, int type, int life);
