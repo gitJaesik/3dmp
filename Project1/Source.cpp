@@ -66,7 +66,6 @@ int main()
 		Renderer::GetInstance()->reder();
 
 		// break하는 부분
-
 		if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
 			break;
 	}

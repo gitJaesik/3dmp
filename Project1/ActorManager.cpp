@@ -27,6 +27,12 @@ void ActorManager::AddActor(Actor* pActor)
 void ActorManager::RemoveActor()
 {
 	for (unsigned int i = 0; i < actors.size(); ++i) {
+		// childe node Á¦°Å
+		for (auto& child_node : actors[i]->getChildNodes())
+		{
+			delete child_node;
+		}
+
 		delete actors[i];
 		actors[i] = nullptr;
 	}
