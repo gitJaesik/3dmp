@@ -7,6 +7,5 @@ public:
 	~missile();
 
 	virtual void update() override;
-
 };
 

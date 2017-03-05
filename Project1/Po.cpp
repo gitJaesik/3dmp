@@ -17,6 +17,8 @@ Po::~Po()
 // Hero가 준 _theta 값을 기준으로 자동으로 좌표 업데이트
 void Po::update()
 {	
+	Actor::update();
+
 	actorInfo._pt.x = cosf(_theta) * _gun_barrel_length + getParentNode()->actorInfo._pt.x;
 	actorInfo._pt.y = sinf(_theta) * _gun_barrel_length + getParentNode()->actorInfo._pt.y;
 }

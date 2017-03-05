@@ -1,13 +1,13 @@
 #pragma once
 
 struct Point {
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 struct ActorInfo
 {
-	ActorInfo(int x, int y, int type, int life);
+	ActorInfo(float x, float y, int type, int life);
 	ActorInfo();
 	~ActorInfo();
 
@@ -15,7 +15,7 @@ struct ActorInfo
 	int _type;
 	int _life;
 
-	void initialize(int x, int y, int type, int life);
+	void initialize(float x, float y, int type, int life);
 
 };
 

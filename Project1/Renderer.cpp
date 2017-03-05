@@ -92,8 +92,13 @@ void Renderer::reder()
 
 	for (unsigned int i = 0; i < ActorManager::GetInstance()->GetActors().size(); ++i) {
 		Actor* actor = ActorManager::GetInstance()->GetActors()[i];
-		if (actor->actorInfo._life > 0) {
-			buffer[actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40] = objectShape[actor->actorInfo._type];
+
+		int acotrPos = actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40;
+		if (acotrPos < 640 && actor->actorInfo._life > 0) {
+			buffer[acotrPos] = objectShape[actor->actorInfo._type];
+		} else {
+			actor->actorInfo._life = 0;
+			ActorManager::GetInstance()->RemoveActorOne(actor);
 		}
 	}
 

@@ -13,5 +13,6 @@ missile::~missile()
 
 void missile::update()
 {
+	Actor::update();
 
 }

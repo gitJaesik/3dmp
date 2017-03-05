@@ -12,7 +12,10 @@ Actor::~Actor()
 
 void Actor::update()
 {
-
+	for (auto pChildNode : _ChildNode)
+	{
+		pChildNode->update();
+	}
 }
 
 const std::vector<Actor*>& Actor::getChildNodes()
@@ -22,6 +25,7 @@ const std::vector<Actor*>& Actor::getChildNodes()
 
 void Actor::addChildNode(Actor* child_node)
 {
+	child_node->setParentNode(this);
 	_ChildNode.emplace_back(child_node);
 }
 

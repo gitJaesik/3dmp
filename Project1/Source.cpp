@@ -20,7 +20,6 @@ void createObjects() {
 	Po* po = new Po;
 	po->actorInfo = ActorInfo(18, 8, 3, 1);
 	hero->addChildNode(po); 
-	po->setParentNode(hero);
 
 	Enemy* enemy = new Enemy;
 	enemy->actorInfo = ActorInfo(6, 3, 2, 1);
@@ -34,9 +33,9 @@ void createObjects() {
 	enemy3->actorInfo = ActorInfo(20, 7, 2, 1);
 	ActorManager::GetInstance()->AddActor(enemy3);
 
-	missile* missile1 = new missile;
-	missile1->actorInfo = ActorInfo(18, 8, 0, 1);
-	ActorManager::GetInstance()->AddActor(missile1);
+	//missile* missile1 = new missile;
+	//missile1->actorInfo = ActorInfo(18, 8, 0, 1);
+	//ActorManager::GetInstance()->AddActor(missile1);
 }
 
 
