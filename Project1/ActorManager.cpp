@@ -24,7 +24,7 @@ void ActorManager::AddActor(Actor* pActor)
 	actors.push_back(pActor);
 }
 
-void ActorManager::RemoveActor()
+void ActorManager::RemoveAllActor()
 {
 	for (unsigned int i = 0; i < actors.size(); ++i) {
 		// childe node 제거
@@ -42,6 +42,7 @@ void ActorManager::RemoveActor()
 
 void ActorManager::update()
 {
+
 	// 모든 actor의 값을 업데이트한다.
 	for (auto actor : actors)
 	{
@@ -61,7 +62,7 @@ const std::vector<Actor*>& ActorManager::GetActors()
 	return actors;
 }
 
-void ActorManager::RemoveActorOne(Actor* pActor)
+void ActorManager::RemoveActor(Actor* pActor)
 {
 	auto next = actors.begin();
 	auto end = actors.end();
@@ -69,11 +70,25 @@ void ActorManager::RemoveActorOne(Actor* pActor)
 	{
 		if (*next == pActor) {
 			delete *next;
-			next=actors.erase(next);
+			next = actors.erase(next);
 			end = actors.end();
+			break;
 		} else {
 			++next;
 		}
 		
 	}
+}
+
+Actor* ActorManager::FindActorByActorName(const std::string& name)
+{
+	auto next = actors.begin();
+	auto end = actors.end();
+	while (next != end) {
+		if ((*next)->isEqualActorName(name)) {
+			return *next;
+		}
+	}
+
+	return nullptr;
 }

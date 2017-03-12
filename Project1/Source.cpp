@@ -14,6 +14,7 @@ using namespace std;
 void createObjects() {
 	Hero* hero = new Hero;
 	hero->actorInfo = ActorInfo(13, 11, 1, 1);
+	hero->setActorName("hero");
 	ActorManager::GetInstance()->AddActor(hero);
 
 	// Po의 시작점과 끝점을 입력
@@ -50,7 +51,9 @@ int main()
 
 	createObjects();
 
-	
+
+	Actor* hero = ActorManager::GetInstance()->FindActorByActorName("hero");
+
 	printf("\0");
 	while ( true ) 
 	{	//update , render
@@ -67,9 +70,26 @@ int main()
 		// break하는 부분
 		if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
 			break;
+		
+		if (hero) {
+			Po* po = static_cast<Po*>(hero->getChildNodes()[0]);
+			if (GetAsyncKeyState(VK_LEFT) & 0x8001)
+				po->_theta -= 0.03f;
+
+			if (GetAsyncKeyState(VK_RIGHT) & 0x8001)
+				po->_theta += 0.03f;
+
+			if (GetAsyncKeyState(VK_SPACE) & 0x8001) {
+
+				// po 밑에 missle 추가하기
+				po->addChildNode(new missile);
+				missile* missile1 = new missile;
+				missile1->actorInfo = ActorInfo(18, 8, 0, 1);
+			}
+		}
 	}
 
-	ActorManager::GetInstance()->RemoveActor();
+	ActorManager::GetInstance()->RemoveAllActor();
 
 	return 0;
 }

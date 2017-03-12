@@ -6,7 +6,7 @@ Po::Po()
 {
 	// theta √ ±‚»≠
 	_theta = -90.0f * (3.141592f / 180.0f);			// degree to radian,  radian to degree
-	_gun_barrel_length = 5.0f;
+	_gun_barrel_length = 7.0f;
 }
 
 

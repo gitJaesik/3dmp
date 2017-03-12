@@ -5,7 +5,7 @@
 #include <iostream>
 #include <typeinfo>
 #include "ActorManager.h"
-
+#include <string>
 
 Renderer* Renderer::GetInstance()
 {
@@ -76,12 +76,29 @@ void Renderer::update()
 				int pox = G.x*t;
 				int poy = G.y*t;
 
-				int po = pox + e->actorInfo._pt.x + (poy + e->actorInfo._pt.y) * 40;
+				int po = pox + e->actorInfo._pt.x + (poy + e->actorInfo._pt.y) * width;
 
 				// buffer size 초과 하지 않도록 설정
 				if (po < buffer.size())
 					buffer[po] = objectShape[e->getChildNodes()[0]->actorInfo._type];		//화면 좌표 기준
 			}
+
+
+			// Hero 주의에 원 그리기
+			float radious = 1.0f;
+			// degree to radian,  radian to degree
+			for (float theta = -180.0f * (3.141592f / 180.0f); theta < 180.0f * (3.141592f / 180.0f); ++theta)
+			{
+				int xx = cosf(theta) * radious + e->actorInfo._pt.x;
+				int yy = sinf(theta) * radious + e->actorInfo._pt.y;
+				
+				
+				//OutputDebugString((std::to_string(yy) + std::string("\n")) .c_str());
+				int circle = xx + (yy) * width;
+				if (circle < buffer.size())
+					buffer[circle] = objectShape[1];
+			}
+
 		}
 	}
 }
@@ -93,20 +110,20 @@ void Renderer::reder()
 	for (unsigned int i = 0; i < ActorManager::GetInstance()->GetActors().size(); ++i) {
 		Actor* actor = ActorManager::GetInstance()->GetActors()[i];
 
-		int acotrPos = actor->actorInfo._pt.x + actor->actorInfo._pt.y * 40;
+		int acotrPos = actor->actorInfo._pt.x + actor->actorInfo._pt.y * width;
 		if (acotrPos < 640 && actor->actorInfo._life > 0) {
 			buffer[acotrPos] = objectShape[actor->actorInfo._type];
 		} else {
 			actor->actorInfo._life = 0;
-			ActorManager::GetInstance()->RemoveActorOne(actor);
+			ActorManager::GetInstance()->RemoveActor(actor);
 		}
 	}
 
 	for (size_t  i = 0; i < buffer.size(); ++i) {
-		if (i != 0 && i % 40 == 0) {
+		if (i != 0 && i % width == 0) {
 			printf("\n");
 		}
-		printf("%c", buffer[i]);
+		printf("%c ", buffer[i]);
 	}
 }
 

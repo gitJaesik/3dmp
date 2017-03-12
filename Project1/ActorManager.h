@@ -15,8 +15,9 @@ public:
 	void initialize();
 	void AddActor(Actor* pActor);
 	void UpdateActor(Actor* pActor);
-	void RemoveActor();
-	void RemoveActorOne(Actor* pActor);
+	void RemoveAllActor();
+	void RemoveActor(Actor* pActor);
+	Actor* FindActorByActorName(const std::string& name);
 
 	// 참조자를 넘김으로 비용을 줄인다.
 	const std::vector<Actor*>& GetActors();
