@@ -85,16 +85,19 @@ void Renderer::update()
 
 
 			// Hero 주의에 원 그리기
-			float radious = 1.0f;
+			float radious = 5.0f;
+			float toRad = 3.141592f / 180.0f;
 			// degree to radian,  radian to degree
-			for (float theta = -180.0f * (3.141592f / 180.0f); theta < 180.0f * (3.141592f / 180.0f); ++theta)
+			for (float angle = 0; angle <= 360; angle+=15.0f)
 			{
-				int xx = cosf(theta) * radious + e->actorInfo._pt.x;
-				int yy = sinf(theta) * radious + e->actorInfo._pt.y;
-				
-				
-				//OutputDebugString((std::to_string(yy) + std::string("\n")) .c_str());
-				int circle = xx + (yy) * width;
+
+				float xx = e->actorInfo._pt.x + int(cosf(angle*toRad) * radious);
+				float yy = e->actorInfo._pt.y + int(sinf(angle*toRad) * radious);
+		
+				int circle = xx + yy *width;
+
+				//OutputDebugString((std::to_string(yy *width) + std::string(", ") + std::to_string(int(yy) *width) + std::string("\n")).c_str());
+
 				if (circle < buffer.size())
 					buffer[circle] = objectShape[1];
 			}
