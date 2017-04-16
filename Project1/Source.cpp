@@ -7,13 +7,14 @@
 #include "Renderer.h"
 #include "ActorManager.h"
 #include <windows.h>
+#include <timeapi.h>
 
 using namespace std;
 
 
 void createObjects() {
 	Hero* hero = new Hero;
-	hero->actorInfo = ActorInfo(13, 11, 1, 1);
+	hero->actorInfo = ActorInfo(13, 14, 1, 1);
 	hero->setActorName("hero");
 	ActorManager::GetInstance()->AddActor(hero);
 
@@ -55,8 +56,38 @@ int main()
 	Actor* hero = ActorManager::GetInstance()->FindActorByActorName("hero");
 
 	printf("\0");
+	DWORD previousTime = timeGetTime();
+	DWORD currentTime = timeGetTime();
+	DWORD deltaTime = 0;
+	float tick = 0.0f;
+	float accumulationTime = 0.0f;
+	float FPSTime = 0.0f;
+	DWORD FPS = 0;
+	DWORD frameCounter = 0;
+	float acc = 0.0f;
+	
+	float speed = 4.8f;
+
 	while ( true ) 
-	{	//update , render
+	{	
+		currentTime = timeGetTime();
+		tick = (currentTime - previousTime) / 1000.0f;
+
+		accumulationTime += tick;
+		FPSTime += tick;
+
+		if (FPSTime >= 1.0f){
+			FPSTime = 0.0f;
+			FPS = frameCounter;
+			frameCounter = 0;
+		}
+			
+
+		std::cout << "FPS\t" << FPS << std::endl;
+		std::cout << tick <<"\t"<< accumulationTime << std::endl;
+
+
+		//update , render
 		//hero->actorInfo._pt.x++;
 		Renderer::GetInstance()->windowClear();
 
@@ -80,13 +111,28 @@ int main()
 				po->_theta += 0.03f;
 
 			if (GetAsyncKeyState(VK_SPACE) & 0x8001) {
-
 				// po 밑에 missle 추가하기
 				po->addChildNode(new missile);
 				missile* missile1 = new missile;
 				missile1->actorInfo = ActorInfo(18, 8, 0, 1);
 			}
+
+			//tick
+			if (GetAsyncKeyState('A') & 0x8001) {
+				hero->actorInfo._pt.x -= 1;
+			}
+
+			if (GetAsyncKeyState('D') & 0x8001) {
+				
+			}
+
+			if (hero->actorInfo._pt.x < 200)
+				hero->actorInfo._pt.x += tick * speed;
+			
 		}
+		
+		previousTime = currentTime;
+		frameCounter += 1;
 	}
 
 	ActorManager::GetInstance()->RemoveAllActor();
