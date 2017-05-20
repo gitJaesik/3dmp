@@ -10,6 +10,11 @@ Po::Po()
 }
 
 
+Po::Po(const std::string& actorName) : Actor(actorName)
+{
+
+}
+
 Po::~Po()
 {
 }

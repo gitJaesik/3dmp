@@ -3,8 +3,11 @@
 
 class Po : public Actor
 {
-public:
+protected:
 	Po();
+
+public:
+	Po(const std::string& actorName);
 	~Po();
 
 	// theta ¼±¾ð 

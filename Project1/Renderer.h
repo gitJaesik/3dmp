@@ -25,6 +25,7 @@ private :
 	std::vector<char> buffer;
 
 	char objectShape[5]; // type 별로 그림을 그릴 때 사용할 배열
-	const int width = 30;
+	const int width = 80;
+	const int height = 42;
 };
 

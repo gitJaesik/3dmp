@@ -4,6 +4,11 @@ Enemy::Enemy()
 {
 }
 
+Enemy::Enemy(const std::string& actorName) : Actor(actorName)
+{
+
+}
+
 Enemy::~Enemy()
 {
 }

@@ -10,6 +10,11 @@ Hero::Hero()
 	// 생성자에서 actorInfo._pt가 초기화가 안 되어있기 때문에 쓰레기값이 입력 된다.
 }
 
+Hero::Hero(const std::string& actorName) : Actor(actorName)
+{
+	
+}
+
 Hero::~Hero()
 {
 }

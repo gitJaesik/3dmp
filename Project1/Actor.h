@@ -6,15 +6,25 @@
 
 class Actor
 {
-public:
+protected:
 	Actor();
+
+public:
+
+	Actor(const std::string& actorName);
+	
+
 	~Actor();
 	ActorInfo actorInfo;
+
+
 
 	virtual void update();
 
 	const std::vector<Actor*>& getChildNodes();
 	void addChildNode(Actor* child_node);
+
+	void detachChildNode(const std::string& actorName);
 
 	const Actor* getParentNode();
 	void setParentNode(Actor* parent_node);

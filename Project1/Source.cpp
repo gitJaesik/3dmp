@@ -13,25 +13,26 @@ using namespace std;
 
 
 void createObjects() {
-	Hero* hero = new Hero;
-	hero->actorInfo = ActorInfo(13, 14, 1, 1);
-	hero->setActorName("hero");
+
+	Hero* hero = new Hero("hero");
+	hero->actorInfo = ActorInfo(13, 34, 1, 1);
 	ActorManager::GetInstance()->AddActor(hero);
 
 	// Po의 시작점과 끝점을 입력
-	Po* po = new Po;
+	Po* po = new Po("po");
+	ActorManager::GetInstance()->AddActor(po);
 	po->actorInfo = ActorInfo(18, 8, 3, 1);
 	hero->addChildNode(po); 
 
-	Enemy* enemy = new Enemy;
+	Enemy* enemy = new Enemy("enemy1");
 	enemy->actorInfo = ActorInfo(6, 3, 2, 1);
 	ActorManager::GetInstance()->AddActor(enemy);
 
-	Enemy* enemy2 = new Enemy;
+	Enemy* enemy2 = new Enemy("enemy2");
 	enemy2->actorInfo = ActorInfo(10, 4, 2, 1);
 	ActorManager::GetInstance()->AddActor(enemy2);
 
-	Enemy* enemy3 = new Enemy;
+	Enemy* enemy3 = new Enemy("enemy3");
 	enemy3->actorInfo = ActorInfo(20, 7, 2, 1);
 	ActorManager::GetInstance()->AddActor(enemy3);
 
@@ -52,8 +53,9 @@ int main()
 
 	createObjects();
 
+	Hero* hero = dynamic_cast<Hero*>(ActorManager::GetInstance()->FindActorByActorName("hero"));
 
-	Actor* hero = ActorManager::GetInstance()->FindActorByActorName("hero");
+	Po* po = dynamic_cast<Po*>(ActorManager::GetInstance()->FindActorByActorName("po"));
 
 	printf("\0");
 	DWORD previousTime = timeGetTime();
@@ -66,7 +68,7 @@ int main()
 	DWORD frameCounter = 0;
 	float acc = 0.0f;
 	
-	float speed = 4.8f;
+	float speed = 10.0f;
 
 	while ( true ) 
 	{	
@@ -82,7 +84,7 @@ int main()
 			frameCounter = 0;
 		}
 			
-
+		std::cout << '\n';
 		std::cout << "FPS\t" << FPS << std::endl;
 		std::cout << tick <<"\t"<< accumulationTime << std::endl;
 
@@ -93,17 +95,16 @@ int main()
 
 		// 모든 actor들을 update하도록 변경
 		ActorManager::GetInstance()->update();
-		
 		Renderer::GetInstance()->update();
 
-		Renderer::GetInstance()->reder();
+		
 
 		// break하는 부분
 		if ((GetAsyncKeyState(VK_ESCAPE) & 0x8000))
 			break;
 		
-		if (hero) {
-			Po* po = static_cast<Po*>(hero->getChildNodes()[0]);
+		if (hero && po) {
+
 			if (GetAsyncKeyState(VK_LEFT) & 0x8001)
 				po->_theta -= 0.03f;
 
@@ -112,25 +113,25 @@ int main()
 
 			if (GetAsyncKeyState(VK_SPACE) & 0x8001) {
 				// po 밑에 missle 추가하기
-				po->addChildNode(new missile);
-				missile* missile1 = new missile;
-				missile1->actorInfo = ActorInfo(18, 8, 0, 1);
+				//po->addChildNode(new missile);
+				//missile* missile1 = new missile;
+				//missile1->actorInfo = ActorInfo(18, 8, 0, 1);
 			}
 
 			//tick
 			if (GetAsyncKeyState('A') & 0x8001) {
-				hero->actorInfo._pt.x -= 1;
+				hero->actorInfo._pt.x -= tick * speed;
 			}
 
 			if (GetAsyncKeyState('D') & 0x8001) {
-				
+				hero->actorInfo._pt.x += tick * speed;
 			}
 
-			if (hero->actorInfo._pt.x < 200)
-				hero->actorInfo._pt.x += tick * speed;
 			
 		}
 		
+		Renderer::GetInstance()->reder();
+
 		previousTime = currentTime;
 		frameCounter += 1;
 	}

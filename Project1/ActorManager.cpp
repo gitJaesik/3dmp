@@ -88,6 +88,7 @@ Actor* ActorManager::FindActorByActorName(const std::string& name)
 		if ((*next)->isEqualActorName(name)) {
 			return *next;
 		}
+		++next;
 	}
 
 	return nullptr;

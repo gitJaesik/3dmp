@@ -29,9 +29,16 @@ Renderer::~Renderer()
 {
 }
 
+
+
 void Renderer::initialize()
 {
-	buffer.resize(640);
+	CONSOLE_CURSOR_INFO curInfo;
+	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+	curInfo.bVisible = 0; 
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+
+	buffer.resize(height * width);
 	
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		buffer[i] = ' ';
@@ -48,22 +55,22 @@ void Renderer::update()
 	
 	//hero 의 포 구하기, actormanager를 world 개념으로 사용하여 world중에서 hero를 구하는 방식으로 구하기
 
-	for (auto e : ActorManager::GetInstance()->GetActors())
+	for (auto pActor : ActorManager::GetInstance()->GetActors())
 	{
 		// const std::type_info& t1 = typeid(*e);
 		// const std::type_info& t2 = typeid(Hero);
 
-		if (typeid(*e) == typeid(Hero))
+		if (typeid(*pActor) == typeid(Hero))
 		{
 			// 부모노드 위치(hero 위치)와 자식노드(po의 위치) 사이의 거리를 구한다.
 			float Distance = sqrtf(
-				(e->getChildNodes()[0]->actorInfo._pt.y - e->actorInfo._pt.y) * (e->getChildNodes()[0]->actorInfo._pt.y - e->actorInfo._pt.y)
-				+ (e->getChildNodes()[0]->actorInfo._pt.x - e->actorInfo._pt.x) * (e->getChildNodes()[0]->actorInfo._pt.x - e->actorInfo._pt.x)
+				(pActor->getChildNodes()[0]->actorInfo._pt.y - pActor->actorInfo._pt.y) * (pActor->getChildNodes()[0]->actorInfo._pt.y - pActor->actorInfo._pt.y)
+				+ (pActor->getChildNodes()[0]->actorInfo._pt.x - pActor->actorInfo._pt.x) * (pActor->getChildNodes()[0]->actorInfo._pt.x - pActor->actorInfo._pt.x)
 			);
 
 			Point G;
-			G.x = e->getChildNodes()[0]->actorInfo._pt.x - e->actorInfo._pt.x;
-			G.y = e->getChildNodes()[0]->actorInfo._pt.y - e->actorInfo._pt.y;
+			G.x = pActor->getChildNodes()[0]->actorInfo._pt.x - pActor->actorInfo._pt.x;
+			G.y = pActor->getChildNodes()[0]->actorInfo._pt.y - pActor->actorInfo._pt.y;
 
 			// t는 0~1까지의 범위를 가진다.
 			float t = 0.0f;
@@ -76,11 +83,11 @@ void Renderer::update()
 				int pox = G.x*t;
 				int poy = G.y*t;
 
-				int po = pox + e->actorInfo._pt.x + (poy + e->actorInfo._pt.y) * width;
+				int po = pox + pActor->actorInfo._pt.x + (poy + pActor->actorInfo._pt.y) * width;
 
 				// buffer size 초과 하지 않도록 설정
 				if (po < buffer.size())
-					buffer[po] = objectShape[e->getChildNodes()[0]->actorInfo._type];		//화면 좌표 기준
+					buffer[po] = objectShape[pActor->getChildNodes()[0]->actorInfo._type];		//화면 좌표 기준
 			}
 
 
@@ -91,8 +98,8 @@ void Renderer::update()
 			for (float angle = 0; angle <= 360; angle+=15.0f)
 			{
 
-				float xx = e->actorInfo._pt.x + int(cosf(angle*toRad) * radious);
-				float yy = e->actorInfo._pt.y + int(sinf(angle*toRad) * radious);
+				float xx = pActor->actorInfo._pt.x + int(cosf(angle*toRad) * radious);
+				float yy = pActor->actorInfo._pt.y + int(sinf(angle*toRad) * radious);
 		
 				int circle = xx + yy *width;
 
@@ -114,7 +121,7 @@ void Renderer::reder()
 		Actor* actor = ActorManager::GetInstance()->GetActors()[i];
 
 		int acotrPos = actor->actorInfo._pt.x + actor->actorInfo._pt.y * width;
-		if (acotrPos < 640 && actor->actorInfo._life > 0) {
+		if (acotrPos < height * width && actor->actorInfo._life > 0) {
 			buffer[acotrPos] = objectShape[actor->actorInfo._type];
 		} else {
 			actor->actorInfo._life = 0;
